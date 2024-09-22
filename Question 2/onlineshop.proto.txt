@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package onlineshop;
+
+service ShoppingService {
+    rpc AddProduct(AddProductRequest) returns (AddProductResponse);
+    rpc CreateUsers(stream CreateUserRequest) returns (CreateUserResponse);
+    rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse);
+    rpc RemoveProduct(RemoveProductRequest) returns (RemoveProductResponse);
+    rpc ListAvailableProducts(Empty) returns (ProductListResponse);
+    rpc SearchProduct(SearchProductRequest) returns (SearchProductResponse);
+    rpc AddToCart(AddToCartRequest) returns (AddToCartResponse);
+    rpc PlaceOrder(PlaceOrderRequest) returns (PlaceOrderResponse);
+}
+
+message AddProductRequest {
+    string name = 1;
+    string description = 2;
+    float price = 3;
+    int32 stock_quantity = 4;
+    string sku = 5;
+    string status = 6;
+}
+
+message AddProductResponse {
+    string product_code = 1;
+}
+
+message CreateUserRequest {
+    string user_id = 1;
+    string user_type = 2; // "customer" or "admin"
+}
+
+message CreateUserResponse {
+    string message = 1;
+}
+
+message UpdateProductRequest {
+    string product_code = 1;
+    string name = 2;
+    string description = 3;
+    float price = 4;
+    int32 stock_quantity = 5;
+    string status = 6;
+}
+
+message UpdateProductResponse {
+    string message = 1;
+}
+
+message RemoveProductRequest {
+    string product_code = 1;
+}
+
+message RemoveProductResponse {
+    repeated Product products = 1;
+}
+
+message ListAvailableProducts {
+}
+
+message ProductListResponse {
+    repeated Product products = 1;
+}
+
+message SearchProductRequest {
+    string sku = 1;
+}
+
+message SearchProductResponse {
+    Product product = 1; // Return product details
+}
+
+message AddToCartRequest {
+    string user_id = 1;
+    string sku = 2;
+}
+
+message AddToCartResponse {
+    string message = 1;
+}
+
+message PlaceOrderRequest {
+    string user_id = 1;
+}
+
+message PlaceOrderResponse {
+    string message = 1;
+}
+
+message Product {
+    string name = 1;
+    string description = 2;
+    float price = 3;
+    int32 stock_quantity = 4;
+    string sku = 5;
+    string status = 6;
+}
+
+message Empty {}
